@@ -59,9 +59,9 @@ To use it in your Maven build add:
 </repositories>
         ...
 <dependency>
-<groupId>com.github.jecksolovyev</groupId>
-<artifactId>com.docstudio.api.client</artifactId>
-<version>R125.4</version>
+    <groupId>com.github.jecksolovyev</groupId>
+    <artifactId>com.docstudio.api.client</artifactId>
+    <version>R125.4</version>
 </dependency>
 ```
 
@@ -80,7 +80,7 @@ dependencies {
 ```
 
 ### 5. Use DocStudio API client to interact with DocStudio API
-Create a new instance of `ApiClient` class and pass your application token to it:
+5.1. Create a new instance of `ApiClient` class and pass your application token to it:
 ```java
 import com.docstudio.client.ApiClient;
 ...
@@ -95,13 +95,13 @@ private ApiClient getApiClient(String token) {
 
 ApiClient client = getApiClient("my_application_token");
 ```
-Get first user mailbox ID:
+5.2. Get first user mailbox ID:
 ```java
 MailboxControllerApi mailboxControllerApi = new MailboxControllerApi(apiClient);
 UUID mailboxId = mailboxControllerApi.getAllForUser().getFirst().getMailboxUuid();
 ```
 
-Upload your PDF document to DocStudio:
+5.3. Upload your PDF document to DocStudio:
 ```java
 TemplateControllerApi templateControllerApi = new TemplateControllerApi(apiClient);
 File waiver = new File("./files/waiver.pdf");
@@ -109,7 +109,7 @@ UploadedPdfDTO uploadResult = templateControllerApi.uploadPdf(mailboxId, waiver,
 ```
 > Please also check our [Service documentation](https://docs.docstudio.com/) and [Swagger](https://api.docstudio.com/swagger-ui/index.html) for more details.
 
-Prepare template XML
+5.4. Prepare template XML
 ```java
         String pdfHash = uploadResult.getHash(); //d176b8d3750dcd95e242253957956c0e2f56a77ba2987d5c7cacb6d6f0b6bc0b
         String pdfId = uploadResult.getUuid().toString(); //f9c8045b-d1b7-46c0-a93e-3f3cbfbb032d
@@ -144,7 +144,7 @@ Prepare template XML
         </template>
         """;
 ```
-Prepare envelope XML
+5.5. Prepare envelope XML
 ```java
     //Use mailboxId from previous step - 0243d4c8-1462-4389-a868-56e44f9abcb7
     String envelope = """
@@ -163,7 +163,7 @@ Prepare envelope XML
     </envelope>
     """;
 ```
-Send envelope
+5.6. Send envelope
 ```java
     EnvelopeControllerApi envelopeControllerApi = new EnvelopeControllerApi(apiClient);
     OneTimeSendDTO request = new OneTimeSendDTO();
@@ -181,12 +181,12 @@ Send envelope
 ![After](./images/after.png "After")
 
 ![Send](./images/send.png "Send")
- 
-After envelope was signed you can download the signed document:
+
+5.7. After envelope was signed you can download the signed document:
 ```java
     if (envelopeControllerApi.getEnvelopeByUuid(sentEnvelopeId, mailboxId).getEnvelope().getStatus().equals(EnvGetDTO.StatusEnum.COMPLETED)) {
-        File envelopeZip = envelopeControllerApi.getEnvelopeZip(sentEnvelopeId, mailboxUuid, null, null, null);
-        //unzip archive and get everything you need
+File envelopeZip = envelopeControllerApi.getEnvelopeZip(sentEnvelopeId, mailboxUuid, null, null, null);
+//unzip archive and get everything you need
     }
 ```
 
