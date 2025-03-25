@@ -184,10 +184,10 @@ UploadedPdfDTO uploadResult = templateControllerApi.uploadPdf(mailboxId, waiver,
 
 5.7. After envelope was signed you can download the signed document:
 ```java
-    if (envelopeControllerApi.getEnvelopeByUuid(sentEnvelopeId, mailboxId).getEnvelope().getStatus().equals(EnvGetDTO.StatusEnum.COMPLETED)) {
-File envelopeZip = envelopeControllerApi.getEnvelopeZip(sentEnvelopeId, mailboxUuid, null, null, null);
-//unzip archive and get everything you need
-    }
+if (envelopeControllerApi.getEnvelopeByUuid(sentEnvelopeId, mailboxId).getEnvelope().getStatus().equals(EnvGetDTO.StatusEnum.COMPLETED)) {
+    File envelopeZip = envelopeControllerApi.getEnvelopeZip(sentEnvelopeId, mailboxUuid, null, null, null);
+    //unzip archive and get everything you need
+}
 ```
 
 ### 6. Conclusion
