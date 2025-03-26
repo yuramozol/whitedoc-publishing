@@ -7,7 +7,7 @@ the ability to collect legally binding electronic signatures quickly and securel
 That’s where DocStudio comes in.
 
 DocStudio is a modern, enterprise-grade EDI (Electronic Data Interchange) platform that goes far beyond document storage
-and exchange. It offers clear, smooth and user-friend UI and a rich, flexible, and developer-friendly API that allows you to integrate complex document
+and exchange. It offers a clean, intuitive UI and a rich, flexible, developer-friendly API that allows you to integrate complex document
 workflows — including electronic signature collection — directly into your application or service.
 
 In this tutorial, we’ll walk through how to use the DocStudio API to collect a signature on a PDF document. Whether
@@ -32,7 +32,7 @@ the [DocStudio registration page](https://app.docstudio.com/auth/registration) a
 Once you have an account, you’ll need to get an application token. To do this you need to log in to
 the [DocStudio](https://app.docstudio.com/), proceed
 to [Application token tab at Profile page](https://app.docstudio.com/profile?activeTab=application-tokens) and generate
-a new token. Keep it in safe place and never use in public repositories or share it with anybody. This token gives you
+a new token. Keep it in a safe place, and never commit it to public repositories or share it with anyone. This token gives you
 full access to the DocStudio API and should be treated as a secret.
 ![Application token](./images/token.png "Application token")
 
@@ -46,32 +46,30 @@ add [DocStudio API client](https://github.com/jecksolovyev/com.docstudio.api.cli
 To use it in your Maven build add:
 
 ```xml
-
 <repositories>
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
     </repository>
 </repositories>
-        ...
-<dependency>
-    <groupId>com.github.jecksolovyev</groupId>
-    <artifactId>com.docstudio.api.client</artifactId>
-    <version>R125.4</version>
-</dependency>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.jecksolovyev</groupId>
+        <artifactId>com.docstudio.api.client</artifactId>
+        <version>R125.4</version>
+    </dependency>
+</dependencies>
 ```
 
 To use it in with Gradle add:
 
 ```groovy
 repositories {
-    ...
     maven { url "https://jitpack.io" }
 }
-...
 dependencies {
     implementation 'com.github.jecksolovyev:com.docstudio.api.client:R125.4'
-    ...
 }
 ```
 
@@ -89,7 +87,7 @@ private ApiClient getApiClient(String token) {
 
 ...
 
-ApiClient client = getApiClient("my_application_token");
+ApiClient apiClient = getApiClient("my_application_token");
 ```
 
 #### 5.2. Get first user mailbox ID:
@@ -113,9 +111,9 @@ sender.setRecipient(mailboxUuid.toString()); //mailboxUuid from previous step
 quickSendRequest.addRecipientsItem(sender);
 
 QuickSendRecipientDTO signerUser = new QuickSendRecipientDTO();
-signerUser.setRecipient("honoured.user@domain.com");
-signerUser.setSigner(true);
-signerUser.seteInkSignature(true);
+signerUser.setRecipient("honoured.user@domain.com"); // Email address of the signer
+signerUser.setSigner(true); // Marks this recipient as a signer
+signerUser.seteInkSignature(true); // Enables handwritten-style signature input
 quickSendRequest.addRecipientsItem(signerUser);
 ```
 
@@ -125,7 +123,7 @@ EnvelopeControllerApi envelopeControllerApi = new EnvelopeControllerApi(apiClien
 UUID sentEnvelopeId = envelopeControllerApi.quickSendExternalDocuments(mailboxUuid, files, quickSendRequest).getUuid();
 ```
 
-> Now the envelope is sent to the email you have put in the recipients list. You can add as many recipients, as you need. Please also check our [Service documentation](https://docs.docstudio.com/) and [Swagger](https://api.docstudio.com/swagger-ui/index.html) for comprehensive documentation. 
+> Now the envelope is sent to the email you have put in the recipients list. You can add as many recipients as needed — signers, viewers, or CC roles — depending on your use case. Please also check our [Service documentation](https://docs.docstudio.com/) and [Swagger](https://api.docstudio.com/swagger-ui/index.html) for comprehensive documentation. 
 
 #### 5.5 Signing the document
 The signer will receive an email with a link to the document and will be able to sign it or reject.
@@ -143,7 +141,7 @@ if (envelopeControllerApi.getEnvelopeByUuid(sentEnvelopeId, mailboxId).getEnvelo
 ### 6. Conclusion
 As you've seen, integrating electronic signature functionality into your application using the DocStudio API is not only possible — it's straightforward, powerful, and highly customizable. From uploading a PDF, sending signature requests, and finally downloading the signed document, DocStudio gives you full control over the entire process through a clean and developer-friendly API.
 
-Whether you're automating legal agreements, HR documents, waivers, or any other signature-driven workflow, DocStudio lets you embed that functionality directly into your product without relying on third-party signing platforms or clunky manual processes.
+Whether you're automating legal agreements, HR documents, waivers, or any other signature-driven workflow, DocStudio lets you embed that functionality directly into your product without relying on external signing tools or slow, manual workflows.
 
 This tutorial covered the basics of a one-time signature flow, but DocStudio supports much more: reusable templates, embedded signing, complex role-based workflows, webhooks, and detailed audit trails — all accessible via the same consistent API.
 
