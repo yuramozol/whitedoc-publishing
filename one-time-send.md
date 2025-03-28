@@ -61,7 +61,7 @@ To use it in your Maven build add:
 <dependency>
     <groupId>com.github.jecksolovyev</groupId>
     <artifactId>com.docstudio.api.client</artifactId>
-    <version>R125.4</version>
+    <version>R127.4</version>
 </dependency>
 ```
 
@@ -74,7 +74,7 @@ repositories {
 }
 ...
 dependencies {
-    implementation 'com.github.jecksolovyev:com.docstudio.api.client:R125.4'
+    implementation 'com.github.jecksolovyev:com.docstudio.api.client:R127.4'
     ...
 }
 ```
@@ -126,7 +126,7 @@ UploadedPdfDTO uploadResult = templateControllerApi.uploadPdf(mailboxId, waiver,
         		<document id="waiver-doc" landscape="false" pageSize="letter" type="pdf">
         			<info>
         				<title>Waiver</title>
-        				<pdf hash="d176b8d3750dcd95e242253957956c0e2f56a77ba2987d5c7cacb6d6f0b6bc0b" uuid="f9c8045b-d1b7-46c0-a93e-3f3cbfbb032d"/>
+        				<pdf hash="%pdfhash%" uuid="%pdfid%"/>
         			</info>
         			<body>
                         <field name="Signature" page="0" roleId="user-signs" type="einksign" width="42.33" x="31.49" y="125.94"/>
@@ -142,7 +142,7 @@ UploadedPdfDTO uploadResult = templateControllerApi.uploadPdf(mailboxId, waiver,
         		</roles>
         	</flow>
         </template>
-        """;
+        """.replace("%pdfhash%", pdfHash).replace("%pdfid%", pdfId);
 ```
 5.5. Prepare envelope XML
 ```java
