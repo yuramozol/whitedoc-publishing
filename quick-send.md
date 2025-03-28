@@ -57,7 +57,7 @@ To use it in your Maven build add:
     <dependency>
         <groupId>com.github.jecksolovyev</groupId>
         <artifactId>com.docstudio.api.client</artifactId>
-        <version>R125.4</version>
+        <version>R127.4</version>
     </dependency>
 </dependencies>
 ```
@@ -69,7 +69,7 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    implementation 'com.github.jecksolovyev:com.docstudio.api.client:R125.4'
+    implementation 'com.github.jecksolovyev:com.docstudio.api.client:R127.4'
 }
 ```
 
