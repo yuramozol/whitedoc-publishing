@@ -1,4 +1,4 @@
-# How to collect a signature on your PDF using DocStudio API
+# How to Collect E-Signature on Your PDF Using DocStudio API
 
 In the world of digital business, signatures are more than just a formality — they’re a critical part of trust,
 compliance, and workflow automation. Whether you’re closing deals, onboarding clients, or approving internal documents,
